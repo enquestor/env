@@ -1,0 +1,30 @@
+---
+- name: Install fisher
+  shell:
+    executable: fish
+    cmd: curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
+    creates: ~/.config/fish/fish_plugins
+
+- name: Install nvm
+  shell:
+    executable: fish
+    cmd: fisher install jorgebucaran/nvm.fish
+    creates: ~/.config/fish/conf.d/nvm.fish
+
+- name: Install pure theme
+  shell:
+    executable: fish
+    cmd: fisher install pure-fish/pure
+    creates: ~/.config/fish/conf.d/pure.fish
+
+- name: Populate .config/fish/config.fish
+  copy: 
+    src: ./.dotfiles/fish/config.fish
+    dest: ~/.config/fish/config.fish
+
+- name: Set default shell
+  become: true
+  when: default_shell == "fish"
+  shell:
+    executable: fish
+    cmd: chsh -s /bin/fish {{ ansible_user }}

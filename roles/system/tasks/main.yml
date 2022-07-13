@@ -1,0 +1,24 @@
+---
+- name: Install required packages for macOS
+  become: true
+  homebrew:
+    name: "{{ packages_macos }}"
+    state: latest
+  when: os == "MacOSX"
+
+- name: Install required packages for Ubuntu
+  become: true
+  apt:
+    name: "{{ packages_ubuntu }}"
+    state: latest
+  when: os == "Ubuntu"
+
+- name: Populate .vimrc
+  copy: 
+    src: ./.dotfiles/vim/.vimrc
+    dest: ~/.vimrc
+
+- name: Populate .gitconfig
+  copy: 
+    src: ./.dotfiles/git/.gitconfig
+    dest: ~/.gitconfig
