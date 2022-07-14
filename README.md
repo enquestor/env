@@ -13,18 +13,18 @@ git clone git@github.com:Enquestor/env.git
 
 Folder structure should be like the following:
 ```
-/
-|-- fish
-    |-- config.fish
-|-- git
-    |-- .gitconfig
-|-- ssh
-    |-- config
-|-- vim
-    |-- .vimrc
-|-- zsh
-    |-- .zshrc
-    |-- .p10k.zsh
+.dotfiles
+├── fish
+│   └── config.fish
+├── git
+│   └── .gitconfig
+├── ssh
+│   └── config
+├── vim
+│   └── .vimrc
+└── zsh
+    ├── .p10k.zsh
+    └── .zshrc
 ```
 
 4. Run this playbook
