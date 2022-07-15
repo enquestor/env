@@ -1,7 +1,8 @@
 ---
 - name: Install oh-my-zsh
   shell: 
-    cmd: curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+    executable: bash
+    cmd: sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     creates: ~/.oh-my-zsh
 
 - name: Install zsh-autosuggestions
@@ -23,18 +24,32 @@
     depth: 1
     force: yes
 
+- name: Check if zshrc is provided
+  delegate_to: localhost
+  stat:
+    path: "{{ zshrc_path }}"
+  register: zshrc_file
+
 - name: Populate .zshrc
+  when: zshrc_file.stat.exists
   copy: 
-    src: ./.dotfiles/zsh/.zshrc
+    src: "{{ zshrc_path }}"
     dest: ~/.zshrc
+
+- name: Check if p10k config is provided
+  delegate_to: localhost
+  stat:
+    path: "{{ p10k_config_path }}"
+  register: p10k_config_file
 
 - name: Populate .p10k.zsh
   copy: 
-    src: ./.dotfiles/zsh/.p10k.zsh
+    src: "{{ p10k_config_path }}"
     dest: ~/.p10k.zsh
 
 - name: Set default shell to zsh
   become: true
   when: default_shell == "zsh"
-  command:
+  shell:
+    executable: zsh
     cmd: chsh -s /bin/zsh {{ ansible_user }}

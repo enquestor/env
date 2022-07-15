@@ -1,24 +1,45 @@
 ---
 - name: Install required packages for macOS
+  when: os == "MacOSX"
   become: true
   homebrew:
     name: "{{ packages_macos }}"
     state: latest
-  when: os == "MacOSX"
+
+- name: Add fish apt repository
+  when: os == "Ubuntu"
+  become: true
+  shell:
+    executable: bash
+    cmd: apt-add-repository ppa:fish-shell/release-3
 
 - name: Install required packages for Ubuntu
+  when: os == "Ubuntu"
   become: true
   apt:
     name: "{{ packages_ubuntu }}"
     state: latest
-  when: os == "Ubuntu"
+
+- name: Check if vimrc is provided
+  delegate_to: localhost
+  stat:
+    path: "{{ vimrc_path }}"
+  register: vimrc_file
 
 - name: Populate .vimrc
+  when: vimrc_file.stat.exists
   copy: 
-    src: ./.dotfiles/vim/.vimrc
+    src: "{{ vimrc_path }}"
     dest: ~/.vimrc
 
+- name: Check if gitconfig is provided
+  delegate_to: localhost
+  stat:
+    path: "{{ git_config_path }}"
+  register: git_config_file
+
 - name: Populate .gitconfig
+  when: git_config_file.stat.exists
   copy: 
-    src: ./.dotfiles/git/.gitconfig
+    src: "{{ git_config_path }}"
     dest: ~/.gitconfig

@@ -1,7 +1,7 @@
 FROM ubuntu:latest
 
 RUN apt-get update
-RUN apt-get install curl python3 python3-distutils sudo -y
+RUN apt-get install sudo curl python3 python3-distutils software-properties-common -y
 RUN curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 RUN python3 get-pip.py
 
@@ -16,3 +16,6 @@ WORKDIR /home/${user}/ansible
 COPY . .
 
 RUN ansible-playbook -u ${user} -i ansible_hosts env.yml
+
+WORKDIR /home/${user}
+RUN sudo rm -rf ~/ansible

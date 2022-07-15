@@ -17,10 +17,17 @@
     cmd: fisher install pure-fish/pure
     creates: ~/.config/fish/conf.d/pure.fish
 
-- name: Populate .config/fish/config.fish
+- name: Check if fish folder is provided
+  delegate_to: localhost
+  stat:
+    path: "{{ fish_folder_path }}"
+  register: fish_folder
+
+- name: Populate fish folder
+  when: fish_folder.stat.exists
   copy: 
-    src: ./.dotfiles/fish/config.fish
-    dest: ~/.config/fish/config.fish
+    src: "{{ fish_folder_path }}"
+    dest: ~/.config
 
 - name: Set default shell
   become: true

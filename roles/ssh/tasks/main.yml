@@ -1,13 +1,15 @@
 ---
-- name: Create .ssh folder
-  file:
-    path: ~/.ssh
-    state: directory
+- name: Check if ssh folder is provided
+  delegate_to: localhost
+  stat:
+    path: "{{ ssh_folder_path }}"
+  register: ssh_folder
 
-- name: Populate ssh config
-  copy:
-    src: ./.dotfiles/ssh/config
-    dest: ~/.ssh/config
+- name: Populate ssh folder
+  when: ssh_folder.stat.exists
+  copy: 
+    src: "{{ ssh_folder_path }}"
+    dest: "~/.ssh"
 
 - name: Generate ssh key
   become: true
