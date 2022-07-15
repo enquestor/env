@@ -27,7 +27,17 @@ Folder structure should be like the following:
     └── .zshrc
 ```
 
-4. Run this playbook
+4. Enable password-less sudo
+```
+echo $USER # this will show your username
+
+sudo visudo
+
+# add the following line
+[your_username]   ALL = (ALL) NOPASSWD: ALL
+```
+
+5. Run this playbook
 ```
 ansible-playbook -i ansible_hosts env.yml
 ```
