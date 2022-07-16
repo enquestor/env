@@ -8,6 +8,7 @@ RUN python3 get-pip.py
 RUN python3 -m pip install ansible
 RUN ansible --version
 
+ENV TERM xterm-256color
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 ARG user=enquestor
 RUN useradd -m -s /bin/bash -g sudo ${user}
