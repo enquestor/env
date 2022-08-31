@@ -30,3 +30,10 @@
       - containerd.io
       - docker-compose-plugin
     state: latest
+
+- name: Add user to docker group
+  become: true
+  user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: yes
