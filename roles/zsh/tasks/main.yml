@@ -2,7 +2,7 @@
 - name: Install oh-my-zsh
   shell: 
     executable: bash
-    cmd: sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    cmd: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
     creates: ~/.oh-my-zsh
 
 - name: Install zsh-autosuggestions
@@ -46,6 +46,12 @@
   copy: 
     src: "{{ p10k_config_path }}"
     dest: ~/.p10k.zsh
+
+- name: Enable 256-color terminal
+  lineinfile:
+    path: ~/.zshrc
+    regexp: 'export TERM="xterm-256color"'
+    line: 'export TERM="xterm-256color"'
 
 - name: Set default shell to zsh
   become: true
