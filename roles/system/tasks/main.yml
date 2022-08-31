@@ -17,7 +17,7 @@
   become: true
   shell:
     executable: bash
-    cmd: apt-add-repository ppa:fish-shell/release-3
+    cmd: apt-add-repository ppa:fish-shell/release-3 -y
 
 - name: "[Ubuntu] Install required packages for Ubuntu"
   when: os == "Ubuntu"
