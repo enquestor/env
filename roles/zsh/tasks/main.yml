@@ -43,6 +43,7 @@
   register: p10k_config_file
 
 - name: Populate .p10k.zsh
+  when: p10k_config_file.stat.exists
   copy: 
     src: "{{ p10k_config_path }}"
     dest: ~/.p10k.zsh
