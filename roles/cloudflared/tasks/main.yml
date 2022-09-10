@@ -1,0 +1,6 @@
+---
+- import_tasks: macos.yml
+  when: os == "MacOSX"
+
+- import_tasks: ubuntu.yml
+  when: os == "Ubuntu"

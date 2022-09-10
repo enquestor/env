@@ -1,0 +1,12 @@
+---
+- name: "[Ubuntu] Add fish apt repository"
+  become: true
+  shell:
+    executable: bash
+    cmd: apt-add-repository ppa:fish-shell/release-3 -y
+
+- name: "[Ubuntu] Install required packages for Ubuntu"
+  become: true
+  apt:
+    name: "{{ packages_ubuntu }}"
+    state: latest

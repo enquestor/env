@@ -1,0 +1,10 @@
+---
+- name: "[macOS] Install required packages"
+  homebrew:
+    name: "{{ packages_macos }}"
+    state: latest
+
+- name: "[macOS] Adjust dock hide speed"
+  shell:
+    executable: bash
+    cmd: defaults write com.apple.dock autohide-delay -int 0 && defaults write com.apple.dock autohide-time-modifier -float 0.4 && killall Dock

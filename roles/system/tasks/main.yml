@@ -1,30 +1,9 @@
 ---
-- name: "[macOS] Install required packages"
+- import_tasks: macos.yml
   when: os == "MacOSX"
-  become: true
-  homebrew:
-    name: "{{ packages_macos }}"
-    state: latest
 
-- name: "[macOS] Adjust dock hide speed"
-  when: os == "MacOSX"
-  shell:
-    executable: bash
-    cmd: defaults write com.apple.dock autohide-delay -int 0 && defaults write com.apple.dock autohide-time-modifier -float 0.4 && killall Dock
-
-- name: "[Ubuntu] Add fish apt repository"
+- import_tasks: ubuntu.yml
   when: os == "Ubuntu"
-  become: true
-  shell:
-    executable: bash
-    cmd: apt-add-repository ppa:fish-shell/release-3 -y
-
-- name: "[Ubuntu] Install required packages for Ubuntu"
-  when: os == "Ubuntu"
-  become: true
-  apt:
-    name: "{{ packages_ubuntu }}"
-    state: latest
 
 - name: Check if vimrc is provided
   delegate_to: localhost

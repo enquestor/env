@@ -1,0 +1,18 @@
+- name: "[Ubuntu] Add cloudflare gpg apt key"
+  become: true
+  apt_key: 
+    url: https://pkg.cloudflare.com/cloudflare-main.gpg
+    state: present
+
+- name: "[Ubuntu] Add cloudflare repository"
+  become: true
+  apt_repository: 
+    repo: deb https://pkg.cloudflare.com/cloudflared jammy main
+    state: present
+
+- name: "[Ubuntu] Install cloudflared"
+  become: true
+  apt: 
+    name:
+      - cloudflared
+    state: latest

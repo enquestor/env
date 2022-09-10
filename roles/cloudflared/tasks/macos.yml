@@ -1,0 +1,5 @@
+---
+- name: "[macOS] Install cloudflared"
+  homebrew:
+    name: cloudflare/cloudflare/cloudflared
+    state: latest
